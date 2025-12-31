@@ -1,5 +1,4 @@
-package main.java.com.sigfe.backend.model;
-
+package com.sigfe.backend.model;
 
 
 import java.math.BigDecimal; // Importacao da classe BigDecimal e utilizando objeto BigDecimal ou inves de float ou double para obter precisao nos calculos

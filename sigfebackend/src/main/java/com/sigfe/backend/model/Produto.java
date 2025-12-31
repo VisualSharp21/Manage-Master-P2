@@ -1,5 +1,7 @@
-package main.java.com.sigfe.backend.model;
+package com.sigfe.backend.model;
 
+
+import jakarta.persistence.*;
 
 
 import java.time.LocalDate;

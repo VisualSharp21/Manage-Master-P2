@@ -1,4 +1,4 @@
-package main.java.com.sigfe.backend.model;
+package com.sigfe.backend.model;
 
 
 
