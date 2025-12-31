@@ -1,4 +1,9 @@
-package main.java.com.sigfe.backend.repository;
+package com.sigfe.backend.repository;
 
-public class CategoriaRepository {
+public interface CategoriaRepository {
 }
+
+/*No Spring Boot, um Repository (Repositório) é uma camada
+de abstração que serve para gerenciar o acesso aos dados.
+Ele funciona como uma "ponte" entre
+na aplicação e no banco de dados.*/
