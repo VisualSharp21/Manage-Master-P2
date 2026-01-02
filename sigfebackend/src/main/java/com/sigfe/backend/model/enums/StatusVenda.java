@@ -1,4 +1,5 @@
-package main.java.com.sigfe.backend.model.enums;
+package com.sigfe.backend.model.enums;
+
 
 public enum StatusVenda {
     ABERTA,

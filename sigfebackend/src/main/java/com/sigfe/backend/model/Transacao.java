@@ -9,9 +9,9 @@ import java.util.List; // Para fazer listas
 
 @Entity
 // indica que esta classe e uma entidade JPA (vira uma tabela)
-@Table (name = "Transacao")
-// Define o nome da tabela no Banco
-public class Transacao {
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "tipo")
+public abstract class Transacao {
 
     @Id
     // define a chave primaria da tabela
@@ -34,9 +34,8 @@ public class Transacao {
     {
         this.dataTransacao = LocalDate.now();
     }
-    public Transacao(Long id, List<ItemTransacao> itens, String usuario)
+    public Transacao(List<ItemTransacao> itens, String usuario)
     {
-        this.id = id;
         this.itens = itens;
         this.usuario = usuario;
         this.dataTransacao = LocalDate.now();
@@ -50,10 +49,15 @@ public class Transacao {
     public LocalDate getDataTransacao() {return dataTransacao;}
 
     public BigDecimal getValorTotal() {
+        if (itens == null || itens.isEmpty()) {
+            return BigDecimal.ZERO;
+        }
+
         return itens.stream()
                 .map(ItemTransacao::getValorTotal)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
+
 
 
     public List<ItemTransacao> getItens() {return itens;}
@@ -66,8 +70,12 @@ public class Transacao {
 
     public void setItens(List<ItemTransacao> itens) {
         this.itens = itens;
-        itens.forEach(item -> item.setTransacao(this));
+
+        if (itens != null) {
+            itens.forEach(item -> item.setTransacao(this));
+        }
     }
+
 
     public void setUsuario(String usuario) {this.usuario = usuario;}
 

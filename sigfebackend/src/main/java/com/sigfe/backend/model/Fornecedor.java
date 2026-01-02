@@ -1,17 +1,30 @@
 package com.sigfe.backend.model;
 
-public class Fornecedor {
-    private Long id;
-    private String nome;
-    private String email;
-    private int telefone;
+import jakarta.persistence.*;
 
-    public Fornecedor (Long id, String nome, String email, int telefone)
+@Entity
+@Table(name = "fornecedor")
+public class Fornecedor {
+
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column (nullable = false)
+    private String nome;
+
+    private String email;
+
+    @Column (nullable = false)
+    private String telefone;
+
+
+    public Fornecedor ()
     {
-        if(id <= 0)
-            throw new IllegalArgumentException("ID deve ser maior que zero");
-        if(telefone <= 0)
-            throw new IllegalArgumentException("Telefone deve ser maior que zero");
+
+    }
+    public Fornecedor (Long id, String nome, String email, String telefone)
+    {
 
         this.id = id;
         this.nome = nome;
@@ -23,7 +36,7 @@ public class Fornecedor {
         return id;
     }
 
-    public int getTelefone() {
+    public String getTelefone() {
         return telefone;
     }
 
@@ -36,13 +49,11 @@ public class Fornecedor {
     }
 
     public void setId(Long id) {
-        if (id>0)
-            this.id = id;
+        this.id = id;
     }
 
-    public void setTelefone(int telefone) {
-        if(telefone > 0)
-            this.telefone = telefone;
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
     public void setEmail(String email) {

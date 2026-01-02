@@ -1,5 +1,9 @@
 package com.sigfe.backend.repository;
-public interface FornecedorRepository {
+
+import com.sigfe.backend.model.Fornecedor;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface FornecedorRepository extends JpaRepository<Fornecedor, Long> {
 }
 
 /*No Spring Boot, um Repository (Repositório) é uma camada
