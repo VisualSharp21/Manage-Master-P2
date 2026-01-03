@@ -3,7 +3,13 @@ package com.sigfe.backend.repository;
 import com.sigfe.backend.model.Produto;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
+    List<Produto> findByQuantidadeLessThan(int quantidade);
+    List<Produto> findByQuantidadeLessThanEqual(int quantidade);
+
+
 }
 
 /*No Spring Boot, um Repository (Repositório) é uma camada

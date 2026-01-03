@@ -50,3 +50,13 @@ public class FornecedorController {
         return ResponseEntity.noContent().build(); // HTTP 204
     }
 }
+
+/*
+O Controller é responsável por:
+
+Receber requisicoes HTTP (GET, POST, DELETE, etc.)
+
+Chamar o Service
+
+Retornar respostas HTTP (JSON + status)
+* */

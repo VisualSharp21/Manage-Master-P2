@@ -12,13 +12,14 @@ public class ItemTransacao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column (nullable = false)
-    String produto;
+    @ManyToOne
+    @JoinColumn(name = "produto_id", nullable = false)
+    Produto produto;
 
     @Column (nullable = false)
     int quantidade;
 
-    @Column(nullable = false)
+    @Column(nullable = false, precision = 10, scale = 2)
     BigDecimal preco;
 
 
@@ -31,8 +32,17 @@ public class ItemTransacao {
     {
 
     }
-    public ItemTransacao(String produto, int quantidade, BigDecimal preco)
-    {
+    public ItemTransacao(Produto produto, int quantidade, BigDecimal preco) {
+        if (produto == null) {
+            throw new IllegalArgumentException("Produto é obrigatório");
+        }
+        if (quantidade <= 0) {
+            throw new IllegalArgumentException("Quantidade deve ser maior que zero");
+        }
+        if (preco == null || preco.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Preço inválido");
+        }
+
         this.produto = produto;
         this.quantidade = quantidade;
         this.preco = preco;
@@ -45,7 +55,7 @@ public class ItemTransacao {
 
     public BigDecimal getPreco() {return preco;}
 
-    public String getProduto() {return produto;}
+    public Produto getProduto() {return produto;}
 
     public int getQuantidade() {return quantidade;}
 
@@ -71,7 +81,7 @@ public class ItemTransacao {
             this.preco = preco;
     }
 
-    public void setProduto(String produto) {
+    public void setProduto(Produto produto) {
         this.produto = produto;
     }
 

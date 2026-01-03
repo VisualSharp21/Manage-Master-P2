@@ -12,7 +12,7 @@
 │   ├── 📁 src/                 # Código fonte do projeto
 │   ├── 📁 target/              # Artefatos de build
 │   ├── 🐋 Dockerfile           # Configuração do container Docker
-│   ├── ❓ HELP.md               # Documentação de ajuda
+│   ├── ❓ HELP.md              # Documentação de ajuda
 │   ├── 🛠️ mvnw                 # Maven wrapper (Unix/Linux)
 │   ├── 🛠️ mvnw.cmd             # Maven wrapper (Windows)
 │   ├── 📜 pom.xml              # Configuração do Maven

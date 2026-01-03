@@ -65,3 +65,14 @@ public class CompraController {
         return ResponseEntity.noContent().build();
     }
 }
+
+/*
+O Controller é responsável por:
+
+Receber requisicoes HTTP (GET, POST, DELETE, etc.)
+
+Chamar o Service
+
+Retornar respostas HTTP (JSON + status)
+* */
+

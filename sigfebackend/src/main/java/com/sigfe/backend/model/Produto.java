@@ -59,24 +59,49 @@ public class Produto {
 
     }
 
+    // Aumenta o estoque do produto
+    public void adicionarEstoque(int quantidade) {
+        if (quantidade <= 0) {
+            throw new IllegalArgumentException("Quantidade deve ser maior que zero");
+        }
+        this.quantidade += quantidade;
+    }
+
+    // Diminui o estoque do produto
+    public void removerEstoque(int quantidade) {
+        if (quantidade <= 0) {
+            throw new IllegalArgumentException("Quantidade deve ser maior que zero");
+        }
+        if (this.quantidade < quantidade) {
+            throw new IllegalStateException("Estoque insuficiente");
+        }
+        this.quantidade -= quantidade;
+    }
+
+    public void alterarPreco(BigDecimal novoPreco) {
+        if (novoPreco == null || novoPreco.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Preço inválido");
+        }
+        this.preco = novoPreco;
+    }
+    //VERIFICACAO DE VALIDADE
+    public boolean estaVencido() {
+        return validade != null && validade.isBefore(LocalDate.now());
+    }
+
+
+
+
     // Metodos set para fazer a alterção dos atributos
     public void setNome(String nome) {this.nome = nome;}
 
     public void setMarca(String marca) {this.marca = marca;}
 
-    public void setPreco(BigDecimal preco) {
-        // Preco.compareTo(BigDecimal.ZERO) e o metodo usado para comparar o valor com zero
-            this.preco = preco;
-    }
 
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
 
-
-    public void setValidade(LocalDate validade) {
-        this.validade = validade;
-    }
 
     // Metodos get que servem para poder usar o valor dentro dos atributos de forma segura
     public String getNome()
@@ -105,6 +130,22 @@ public class Produto {
     public Categoria getCategoria() {
         return categoria;
     }
+
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Produto)) return false;
+        Produto produto = (Produto) o;
+        return id != null && id.equals(produto.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
+
 }
 
 /*No ecossistema Spring Boot (mais especificamente no uso do Spring Data JPA),
