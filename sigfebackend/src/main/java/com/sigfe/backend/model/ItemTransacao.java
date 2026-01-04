@@ -5,87 +5,64 @@ import java.math.BigDecimal; // Importacao da classe BigDecimal e utilizando obj
 import jakarta.persistence.*;
 
 @Entity
-@Table (name = "item_transacao")
+@Table(name = "item_transacao")
 public class ItemTransacao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "produto_id", nullable = false)
-    Produto produto;
+    private Produto produto;
 
-    @Column (nullable = false)
-    int quantidade;
+    @Column(nullable = false)
+    private Integer quantidade;
 
     @Column(nullable = false, precision = 10, scale = 2)
-    BigDecimal preco;
-
+    private BigDecimal preco;
 
     @ManyToOne
     @JoinColumn(name = "transacao_id", nullable = false)
     private Transacao transacao;
 
+    // 🔹 Construtor padrão (OBRIGATÓRIO para JPA/Jackson)
+    public ItemTransacao() {}
 
-    public ItemTransacao()
-    {
-
-    }
-    public ItemTransacao(Produto produto, int quantidade, BigDecimal preco) {
-        if (produto == null) {
-            throw new IllegalArgumentException("Produto é obrigatório");
-        }
-        if (quantidade <= 0) {
-            throw new IllegalArgumentException("Quantidade deve ser maior que zero");
-        }
-        if (preco == null || preco.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("Preço inválido");
-        }
-
+    // 🔹 Construtor opcional (sem validação pesada)
+    public ItemTransacao(Produto produto, Integer quantidade, BigDecimal preco) {
         this.produto = produto;
         this.quantidade = quantidade;
         this.preco = preco;
     }
 
-    // Metodos get
+    // Getters
+    public Long getId() { return id; }
+    public Produto getProduto() { return produto; }
+    public Integer getQuantidade() { return quantidade; }
+    public BigDecimal getPreco() { return preco; }
+    public Transacao getTransacao() { return transacao; }
 
-
-    public Long getId() {return id;}
-
-    public BigDecimal getPreco() {return preco;}
-
-    public Produto getProduto() {return produto;}
-
-    public int getQuantidade() {return quantidade;}
-
-    public Transacao getTransacao() {return transacao;}
-
-    public BigDecimal getValorTotal() { // Funcao que retorna o valor total da transcao preco x quantidade
+    public BigDecimal getValorTotal() {
         return preco.multiply(BigDecimal.valueOf(quantidade));
     }
 
-    // Metodos Set
-
-
-
-    public void setQuantidade(int quantidade)
-    {
-        if (quantidade > 0)
-            this.quantidade = quantidade;
-    }
-
-    public void setPreco(BigDecimal preco)
-    {
-        if(preco.compareTo(BigDecimal.ZERO) > 0)
-            this.preco = preco;
-    }
-
+    // Setters (SEM exceções)
     public void setProduto(Produto produto) {
         this.produto = produto;
     }
 
-    public void setTransacao(Transacao transacao) {this.transacao = transacao;}
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    public void setPreco(BigDecimal preco) {
+        this.preco = preco;
+    }
+
+    public void setTransacao(Transacao transacao) {
+        this.transacao = transacao;
+    }
 }
 
 /*No ecossistema Spring Boot (mais especificamente no uso do Spring Data JPA),

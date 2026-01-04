@@ -2,6 +2,7 @@ package com.sigfe.backend.service;
 
 import com.sigfe.backend.model.Venda;
 import com.sigfe.backend.repository.VendaRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +16,41 @@ public class VendaService {
         this.vendaRepository = vendaRepository;
     }
 
+    @Transactional
     public Venda salvar(Venda venda) {
+
+        // 🔹 Validações de regra de negócio
+        if (venda.getFormaPagamento() == null) {
+            throw new IllegalArgumentException("Forma de pagamento é obrigatória");
+        }
+
+        if (venda.getNumeroDocumento() == null || venda.getNumeroDocumento().isBlank()) {
+            throw new IllegalArgumentException("Número do documento é obrigatório");
+        }
+
+        if (venda.getItens() == null || venda.getItens().isEmpty()) {
+            throw new IllegalArgumentException("A venda deve conter pelo menos um item");
+        }
+
+        // 🔹 Validação e vínculo dos itens
+        venda.getItens().forEach(item -> {
+
+            if (item.getProduto() == null) {
+                throw new IllegalArgumentException("Item sem produto");
+            }
+
+            if (item.getQuantidade() == null || item.getQuantidade() <= 0) {
+                throw new IllegalArgumentException("Quantidade inválida");
+            }
+
+            if (item.getPreco() == null || item.getPreco().signum() <= 0) {
+                throw new IllegalArgumentException("Preço inválido");
+            }
+
+            // 🔥 vínculo reverso
+            item.setTransacao(venda);
+        });
+
         return vendaRepository.save(venda);
     }
 
@@ -28,7 +63,9 @@ public class VendaService {
                 .orElseThrow(() -> new RuntimeException("Venda não encontrada"));
     }
 
+    @Transactional
     public Venda atualizar(Long id, Venda vendaAtualizada) {
+
         Venda venda = buscarPorId(id);
 
         venda.setFornecedor(vendaAtualizada.getFornecedor());
@@ -37,9 +74,13 @@ public class VendaService {
         venda.setStatus(vendaAtualizada.getStatus());
         venda.setItens(vendaAtualizada.getItens());
 
+        // 🔹 Reassociar itens
+        venda.getItens().forEach(item -> item.setTransacao(venda));
+
         return vendaRepository.save(venda);
     }
 
+    @Transactional
     public void deletar(Long id) {
         vendaRepository.deleteById(id);
     }

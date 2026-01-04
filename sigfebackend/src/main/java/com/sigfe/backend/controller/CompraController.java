@@ -1,5 +1,6 @@
 package com.sigfe.backend.controller;
 
+import com.sigfe.backend.dto.CompraResponseDTO;
 import com.sigfe.backend.model.Compra;
 import com.sigfe.backend.service.CompraService;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +20,21 @@ public class CompraController {
 
     // 🔹 Criar compra
     @PostMapping
-    public ResponseEntity<Compra> criar(@RequestBody Compra compra) {
-        return ResponseEntity.ok(compraService.salvar(compra));
+    public ResponseEntity<CompraResponseDTO> criar(@RequestBody Compra compra) {
+
+        Compra salva = compraService.salvar(compra);
+
+        return ResponseEntity.ok(
+                new CompraResponseDTO(
+                        salva.getId(),
+                        salva.getUsuario(),
+                        salva.getNumeroDocumento(),
+                        salva.getStatus().name(),
+                        salva.getValorTotal()
+                )
+        );
     }
+
 
     // 🔹 Listar todas
     @GetMapping

@@ -17,8 +17,6 @@ public class FornecedorService {
     @Transactional
     public Fornecedor salvar(Fornecedor fornecedor) {
 
-        // Garantir que o ID não venha preenchido
-        fornecedor.setId(null);
 
         // Validações de regra de negócio
         if (fornecedor.getNome() == null || fornecedor.getNome().isBlank()) {

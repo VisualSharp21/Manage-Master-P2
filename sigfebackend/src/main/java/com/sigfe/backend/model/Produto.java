@@ -20,7 +20,7 @@ public class Produto {
     // O banco gera o ID automaticamente    (auto incremento)
 
 
-    private Long id; // Long ao inves de int, boa pratica em JPA (Java Persistence) API
+    private Long id; // Long ao inves de Integer, boa pratica em JPA (Java Persistence) API
 
     @Column(nullable = false) // impede que o nome seja nulo no banco
 
@@ -33,7 +33,7 @@ public class Produto {
     private BigDecimal preco; // Uso de BigDecimal, pois ponto flutuante nao e 100% preciso
 
     @Column(nullable = false) // impede que o quantidade nao seja nulo no banco
-    private int quantidade;
+    private Integer quantidade;
 
     private LocalDate validade;
 
@@ -44,7 +44,7 @@ public class Produto {
     protected Produto () {}
 
     public Produto (String nome, String marca, BigDecimal preco,
-                    int quantidade, LocalDate validade, Categoria categoria)
+                    Integer quantidade, LocalDate validade, Categoria categoria)
     {
         // Validação dos atributos
         this.nome = nome;
@@ -60,7 +60,7 @@ public class Produto {
     }
 
     // Aumenta o estoque do produto
-    public void adicionarEstoque(int quantidade) {
+    public void adicionarEstoque(Integer quantidade) {
         if (quantidade <= 0) {
             throw new IllegalArgumentException("Quantidade deve ser maior que zero");
         }
@@ -68,7 +68,7 @@ public class Produto {
     }
 
     // Diminui o estoque do produto
-    public void removerEstoque(int quantidade) {
+    public void removerEstoque(Integer quantidade) {
         if (quantidade <= 0) {
             throw new IllegalArgumentException("Quantidade deve ser maior que zero");
         }
@@ -98,7 +98,7 @@ public class Produto {
     public void setMarca(String marca) {this.marca = marca;}
 
 
-    public void setQuantidade(int quantidade) {
+    public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
     }
 
@@ -121,7 +121,7 @@ public class Produto {
 
     public Long getId() {return id;}
 
-    public int getQuantidade() {return quantidade;}
+    public Integer getQuantidade() {return quantidade;}
 
     public LocalDate getValidade() {
         return validade;

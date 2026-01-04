@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 // Importa as anotacoes do JPA usadas para mapear a classe no banco de dados
 import java.time.LocalDate; // Biblioteca LocalDate para data atual de forma segura
 import java.math.BigDecimal; // Importacao da classe BigDecimal e utilizando objeto BigDecimal ou inves de float ou double para obter precisao nos calculos
+import java.util.ArrayList;
 import java.util.List; // Para fazer listas
 
 @Entity
@@ -24,7 +25,7 @@ public abstract class Transacao {
 
 
     @OneToMany(mappedBy = "transacao", cascade = CascadeType.ALL)
-    private List<ItemTransacao> itens; // Os itens que estavam incluidos na transacao
+    private List<ItemTransacao> itens = new ArrayList<>(); // Os itens que estavam incluidos na transacao
 
     @Column (nullable = false)
     private String usuario; // Usuario que realizou a transacao

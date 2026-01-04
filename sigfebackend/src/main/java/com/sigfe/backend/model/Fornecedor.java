@@ -23,10 +23,8 @@ public class Fornecedor {
     {
 
     }
-    public Fornecedor (Long id, String nome, String email, String telefone)
+    public Fornecedor ( String nome, String email, String telefone)
     {
-
-        this.id = id;
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
@@ -46,10 +44,6 @@ public class Fornecedor {
 
     public String getNome() {
         return nome;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public void setTelefone(String telefone) {
