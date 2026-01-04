@@ -1,6 +1,7 @@
 package com.sigfe.backend.controller;
 
-import com.sigfe.backend.model.Categoria;
+import com.sigfe.backend.dto.categoria.CategoriaCreateDTO;
+import com.sigfe.backend.dto.categoria.CategoriaResponseDTO;
 import com.sigfe.backend.service.CategoriaService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -8,59 +9,48 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/categorias")
-public class   CategoriaController {
+@RequestMapping("/api/categorias")
+public class CategoriaController {
 
-    private final CategoriaService categoriaService;
+    private final CategoriaService service;
 
-    // Injeção de dependência via construtor
-    public CategoriaController(CategoriaService categoriaService) {
-        this.categoriaService = categoriaService;
+    public CategoriaController(CategoriaService service) {
+        this.service = service;
     }
 
-    /*
-     * Criar nova categoria
-     */
+    // CREATE
     @PostMapping
-    public ResponseEntity<Categoria> criar(@RequestBody Categoria categoria) {
-        Categoria salva = categoriaService.salvar(categoria);
-        return ResponseEntity.ok(salva);
+    public ResponseEntity<CategoriaResponseDTO> criar(
+            @RequestBody CategoriaCreateDTO dto) {
+
+        return ResponseEntity.ok(service.salvar(dto));
     }
 
-    /*
-     * Listar todas as categorias
-     */
+    // READ - LISTAR
     @GetMapping
-    public ResponseEntity<List<Categoria>> listar() {
-        return ResponseEntity.ok(categoriaService.listar());
+    public ResponseEntity<List<CategoriaResponseDTO>> listar() {
+        return ResponseEntity.ok(service.listar());
     }
 
-    /*
-     * Buscar categoria por ID
-     */
+    // READ - BUSCAR POR ID
     @GetMapping("/{id}")
-    public ResponseEntity<Categoria> buscarPorId(@PathVariable Long id) {
-        return ResponseEntity.ok(categoriaService.buscarPorId(id));
+    public ResponseEntity<CategoriaResponseDTO> buscarPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(service.buscarPorId(id));
     }
 
-    /*
-     * Atualizar categoria
-     */
+    // UPDATE
     @PutMapping("/{id}")
-    public ResponseEntity<Categoria> atualizar(
+    public ResponseEntity<CategoriaResponseDTO> atualizar(
             @PathVariable Long id,
-            @RequestBody Categoria categoria) {
+            @RequestBody CategoriaCreateDTO dto) {
 
-        Categoria atualizada = categoriaService.atualizar(id, categoria);
-        return ResponseEntity.ok(atualizada);
+        return ResponseEntity.ok(service.atualizar(id, dto));
     }
 
-    /*
-     * Deletar categoria
-     */
+    // DELETE
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
-        categoriaService.deletar(id);
+        service.deletar(id);
         return ResponseEntity.noContent().build();
     }
 }

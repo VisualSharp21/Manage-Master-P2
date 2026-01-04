@@ -1,47 +1,57 @@
 package com.sigfe.backend.service;
 
+import com.sigfe.backend.dto.produto.ProdutoCreateDTO;
+import com.sigfe.backend.model.Categoria;
 import com.sigfe.backend.model.Produto;
+import com.sigfe.backend.repository.CategoriaRepository;
 import com.sigfe.backend.repository.ProdutoRepository;
-
-/*Anotacao que mostra que esta classe e service do spring
-* Services concentram a logica  de negocio da aplicacao*/
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
-@Service // Marca uma classe como componente service gerenciado pelo Spring
+@Service
 public class ProdutoService {
 
-
-    // Referência ao repositório de Produto
-    // O Service usa o Repository para acessar o banco
     private final ProdutoRepository produtoRepository;
+    private final CategoriaRepository categoriaRepository;
 
-    public ProdutoService(ProdutoRepository produtoRepository) {
-        this.produtoRepository = produtoRepository;  // O spring injeta automaticamente o ProdutoRepository aqui
+    public ProdutoService(ProdutoRepository produtoRepository,
+                          CategoriaRepository categoriaRepository) {
+        this.produtoRepository = produtoRepository;
+        this.categoriaRepository = categoriaRepository;
     }
 
-    public Produto salvar(Produto produto)
-    {
-        return produtoRepository.save(produto); // Responsavel por salvar ou atualizar um produto
+    public Produto salvar(ProdutoCreateDTO dto) {
+        Categoria categoria = categoriaRepository.findById(dto.categoriaId())
+                .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
+
+        Produto produto = new Produto(
+                dto.nome(),
+                dto.marca(),
+                dto.preco(),
+                dto.quantidade(),
+                dto.validade(),
+                categoria
+        );
+
+        return produtoRepository.save(produto);
     }
 
-    public List<Produto> listarTodos()
-    {
-        return produtoRepository.findAll(); // Retorna uma lista com todos os produtos cadastrados no banco
+    public List<Produto> listarTodos() {
+        return produtoRepository.findAll();
     }
 
-    public Optional<Produto> buscarPorId (Long id)
-    {
-        return produtoRepository.findById(id); // Busca um produto pelo Id
+    public Produto buscarPorId(Long id) {
+        return produtoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
     }
 
-    public void remover(Long id)
-    {
-        produtoRepository.deleteById(id);  // Remove um produto do banco usando o Id
+    public void remover(Long id) {
+        produtoRepository.deleteById(id);
     }
 }
+
+
 
 /*
 * CRIACAO de camada Service para a entidade produto

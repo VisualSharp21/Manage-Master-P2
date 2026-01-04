@@ -1,5 +1,7 @@
 package com.sigfe.backend.service;
 
+import com.sigfe.backend.dto.categoria.CategoriaCreateDTO;
+import com.sigfe.backend.dto.categoria.CategoriaResponseDTO;
 import com.sigfe.backend.model.Categoria;
 import com.sigfe.backend.repository.CategoriaRepository;
 import org.springframework.stereotype.Service;
@@ -15,26 +17,48 @@ public class CategoriaService {
         this.repository = repository;
     }
 
-    public Categoria salvar(Categoria categoria) {
-        return repository.save(categoria);
+    // 🔹 CREATE
+    public CategoriaResponseDTO salvar(CategoriaCreateDTO dto) {
+
+        Categoria categoria = new Categoria();
+        categoria.setNome(dto.nome());
+
+        Categoria salva = repository.save(categoria);
+        return new CategoriaResponseDTO(salva);
     }
 
-    public List<Categoria> listar() {
-        return repository.findAll();
+    // 🔹 READ - LISTAR
+    public List<CategoriaResponseDTO> listar() {
+        return repository.findAll()
+                .stream()
+                .map(CategoriaResponseDTO::new)
+                .toList();
     }
 
-    public Categoria buscarPorId(Long id) {
-        return repository.findById(id)
+    // 🔹 READ - BUSCAR POR ID
+    public CategoriaResponseDTO buscarPorId(Long id) {
+        Categoria categoria = repository.findById(id)
                 .orElseThrow(() -> new IllegalStateException("Categoria não encontrada"));
+
+        return new CategoriaResponseDTO(categoria);
     }
 
-    public Categoria atualizar(Long id, Categoria categoria) {
-        Categoria existente = buscarPorId(id);
-        existente.setNome(categoria.getNome());
-        return repository.save(existente);
+    // 🔹 UPDATE
+    public CategoriaResponseDTO atualizar(Long id, CategoriaCreateDTO dto) {
+        Categoria categoria = repository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("Categoria não encontrada"));
+
+        categoria.setNome(dto.nome());
+
+        Categoria atualizada = repository.save(categoria);
+        return new CategoriaResponseDTO(atualizada);
     }
 
+    // 🔹 DELETE
     public void deletar(Long id) {
+        if (!repository.existsById(id)) {
+            throw new IllegalStateException("Categoria não encontrada");
+        }
         repository.deleteById(id);
     }
 }

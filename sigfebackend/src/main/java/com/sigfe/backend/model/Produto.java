@@ -97,6 +97,11 @@ public class Produto {
 
     public void setMarca(String marca) {this.marca = marca;}
 
+    public void setPreco(BigDecimal preco) {this.preco = preco;}
+
+    public void setValidade(LocalDate validade) {this.validade = validade;}
+
+    public void setCategoria(Categoria categoria) {this.categoria = categoria;}
 
     public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;

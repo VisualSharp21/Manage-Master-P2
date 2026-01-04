@@ -1,9 +1,9 @@
-package com.sigfe.backend.dto;
+package com.sigfe.backend.dto.produto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public record ProdutoResponseDTO(
+public record ProdutoResponseDTO( // dados que saem
         Long id,
         String nome,
         String marca,

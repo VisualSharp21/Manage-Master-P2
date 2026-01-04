@@ -1,6 +1,6 @@
 package com.sigfe.backend.controller;
 
-import com.sigfe.backend.dto.CompraResponseDTO;
+import com.sigfe.backend.dto.compra.CompraResponseDTO;
 import com.sigfe.backend.model.Compra;
 import com.sigfe.backend.service.CompraService;
 import org.springframework.http.ResponseEntity;
