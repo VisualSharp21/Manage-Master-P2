@@ -22,13 +22,13 @@ public class UserService {
     // Criar usuário
     public UserResponseDTO create(UserCreateDTO dto) {
 
-        if (userRepository.existsByUsername(dto.username())) {
-            throw new RuntimeException("Username já está em uso");
+        if (userRepository.existsByEmail(dto.email())) {
+            throw new RuntimeException("email já está em uso");
         }
 
         User user = new User(
                 dto.name(),
-                dto.username(),
+                dto.email(),
                 passwordEncoder.encode(dto.password())
         );
 
@@ -37,7 +37,7 @@ public class UserService {
         return new UserResponseDTO(
                 savedUser.getId(),
                 savedUser.getName(),
-                savedUser.getUsername()
+                savedUser.getEmail()
         );
     }
 
@@ -48,7 +48,7 @@ public class UserService {
                 .map(user -> new UserResponseDTO(
                         user.getId(),
                         user.getName(),
-                        user.getUsername()
+                        user.getEmail()
                 ))
                 .toList(); // Java 16+
     }

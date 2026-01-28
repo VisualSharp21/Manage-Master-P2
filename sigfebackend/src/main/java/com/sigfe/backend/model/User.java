@@ -14,8 +14,8 @@ public class User {
     @Column (length = 50, nullable = false)
     private String name;
 
-    @Column (length = 50, nullable = false, unique = true)
-    private String username;
+    @Column (length = 100, nullable = false, unique = true)
+    private String email;
 
     @Column(length = 255, nullable = false)
     private String password;
@@ -25,7 +25,7 @@ public class User {
 
     public User(String name, String username, String password) {
         this.name = name;
-        this.username = username;
+        this.email = username;
         this.password = password;
 
     }
@@ -43,12 +43,12 @@ public class User {
         this.name = name;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String username) {
+        this.email = username;
     }
 
     public String getPassword() {
