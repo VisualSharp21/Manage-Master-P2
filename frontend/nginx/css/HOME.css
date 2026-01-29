@@ -1,0 +1,133 @@
+/* Reset e Variáveis */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    scroll-behavior: smooth;
+}
+
+:root {
+    --azul-escuro: #0a192f;
+    --azul-destaque: #3a7bd5;
+    --preto: #020c1b;
+    --branco: #ffffff;
+}
+
+body {
+    background-color: var(--branco);
+    color: var(--preto);
+    line-height: 1.6;
+}
+
+/* Navbar */
+header {
+    background-color: var(--preto);
+    padding: 1.2rem 5%;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    color: var(--branco);
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.logo span {
+    color: var(--azul-destaque);
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+}
+
+.nav-links li {
+    margin-left: 30px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--branco);
+    font-size: 0.95rem;
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--azul-destaque);
+}
+
+/* Hero Section */
+.hero {
+    height: 100vh;
+    background: linear-gradient(rgba(2, 12, 27, 0.8), rgba(2, 12, 27, 0.8)), 
+                url('../img/background.jpg') center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--branco);
+}
+
+.hero-content h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    max-width: 900px;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 2.5rem;
+    opacity: 0.9;
+}
+
+/* Estilo do Botão Comece Agora */
+.btn-hero {
+    display: inline-block;
+    padding: 15px 40px;
+    background-color: var(--azul-destaque);
+    color: var(--branco);
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 50px; /* Estilo arredondado e moderno */
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+.btn-hero:hover {
+    background-color: #2a62ad;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+/* Seções Gerais */
+.section {
+    padding: 120px 10%;
+    text-align: center;
+}
+
+.dark-bg {
+    background-color: var(--azul-escuro);
+    color: var(--branco);
+}
+
+h2 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+}
+
+footer {
+    background-color: var(--preto);
+    color: var(--branco);
+    text-align: center;
+    padding: 30px;
+    font-size: 0.85rem;
+}
